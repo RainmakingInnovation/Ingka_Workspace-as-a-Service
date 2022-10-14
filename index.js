@@ -189,7 +189,8 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
   //compassOne = compassSecond;
   data.forEach((row) => {
     if (row["Business Model Option"].includes("(")) {
-      row["Business Model Option"] = row["Business Model Option"].split(") ")[1];
+      row["Business Model Option"] =
+        row["Business Model Option"].split(") ")[1];
     } else {
       row["Business Model Option"] = row["Business Model Option"];
     }
@@ -202,8 +203,8 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         row["Play"].replace(/\s/g, "") == compassSecond.replace(/\s/g, ""))
     ) {
       //   if (row['Inc. Compass'] == "TRUE"){
-      if (row['Business Model Option'] == "") {
-        row['Business Model Option'] = "blank";
+      if (row["Business Model Option"] == "") {
+        row["Business Model Option"] = "blank";
       }
       // console.log(row)
       filteredDataWhenIncCompass.push(row);
@@ -231,19 +232,6 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       return d["Business Model Option"];
     })
     .entries(data);
-
-  //--------- Region DropDown
-
-  var a;
-  var regionData = [...new Set(data.map((item) => item.Location))];
-
-  for (let i = 0; i < regionData.length; i++) {
-    // a = new Option(regionData[i], regionData[i]);
-    a = `<a>${regionData[i]}</a>`;
-    $("#region").append(a);
-  }
-
-  //---------
 
   let focusArea = [];
   data.forEach((row) => {
@@ -306,7 +294,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
     .addLayer(
       new L.TileLayer(
         "https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token=" +
-        accessToken,
+          accessToken,
         {
           attribution:
             '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -678,23 +666,6 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .domain(fundingCategoryRangeUnique)
         .range(colors);
 
-      //   var focusAreaSortedParents = d3
-      //     .nest()
-      //     .key(function (d) {
-      //       return d["Play"];
-      //     })
-      //     .key(function (d) {
-      //       return d["Location"];
-      //     })
-      //     .rollup(function (v) {
-      //       var totalFunding = d3.sum(v, function (d) {
-      //         return +getValueWithoutCurrencySymbol(d["Total Funding (USD)"]);
-      //       });
-      //       return totalFunding;
-      //     })
-      //     .entries(data);
-
-
       var focusAreaSortedParents1 = d3
         .nest()
         .key(function (d) {
@@ -711,14 +682,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         })
         .entries(data);
       //--------------
-      //   var focusAreaSorted = [];
-      //   focusAreaSortedParents.forEach((f, i) => {
-      //     f.values.forEach((fv) => {
-      //       fv.parent = f.key;
-      //     });
-      //     focusAreaSorted = focusAreaSorted.concat(f.values);
-      //   });
-      // ---------------2nd
+
       var focusAreaSorted1 = [];
       focusAreaSortedParents1.forEach((f, i) => {
         f.values.forEach((fv) => {
@@ -1005,7 +969,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
           var newArc = firstArcSection.exec(d3.select(this).attr("d"))[1];
           d.newArc = newArc.replace(/,/g, " ");
           d.percentage =
-            ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628318530716;
+            ((d.startAngle - d.endAngle) / 2 + d.startAngle) / 0.0628318530716;
           if (d.percentage >= 100) {
             d.percentage -= 100;
           }
@@ -1367,10 +1331,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -nascentLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * nascentLabelRadius +
-          " 0"
+            -nascentLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * nascentLabelRadius +
+            " 0"
         );
 
       nascentLabel
@@ -1390,10 +1354,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -emergingLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * emergingLabelRadius +
-          " 0"
+            -emergingLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * emergingLabelRadius +
+            " 0"
         );
 
       emergingLabel
@@ -1417,10 +1381,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -acquiredLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * acquiredLabelRadius +
-          " 0"
+            -acquiredLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * acquiredLabelRadius +
+            " 0"
         );
 
       acquiredLabel
@@ -1443,10 +1407,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -series_cPlusLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * series_cPlusLabelRadius +
-          " 0"
+            -series_cPlusLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * series_cPlusLabelRadius +
+            " 0"
         );
 
       series_cPlusLabel
@@ -1469,10 +1433,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -series_bLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * series_bLabelRadius +
-          " 0"
+            -series_bLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * series_bLabelRadius +
+            " 0"
         );
 
       series_bLabel
@@ -1495,10 +1459,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -series_aLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * series_aLabelRadius +
-          " 0"
+            -series_aLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * series_aLabelRadius +
+            " 0"
         );
 
       series_aLabel
@@ -1519,10 +1483,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -seedLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * seedLabelRadius +
-          " 0"
+            -seedLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * seedLabelRadius +
+            " 0"
         );
 
       seedLabel
@@ -1545,10 +1509,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -privateLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * privateLabelRadius +
-          " 0"
+            -privateLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * privateLabelRadius +
+            " 0"
         );
 
       privateLabel
@@ -1586,10 +1550,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
           .attr(
             "d",
             "m " +
-            -this["year" + d.key + "LabelRadius"] +
-            " 0 a 50 50 0 1 1 " +
-            2 * this["year" + d.key + "LabelRadius"] +
-            " 0"
+              -this["year" + d.key + "LabelRadius"] +
+              " 0 a 50 50 0 1 1 " +
+              2 * this["year" + d.key + "LabelRadius"] +
+              " 0"
           );
         d.fn = this["year" + d.key + "Label"];
 
@@ -1612,10 +1576,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         .attr(
           "d",
           "m " +
-          -matureLabelRadius +
-          " 0 a 50 50 0 1 1 " +
-          2 * matureLabelRadius +
-          " 0"
+            -matureLabelRadius +
+            " 0 a 50 50 0 1 1 " +
+            2 * matureLabelRadius +
+            " 0"
         );
 
       matureLabel
@@ -1977,6 +1941,8 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         }
       }
 
+      //--------- Region DropDown
+
       //   debugger
       var count_by_region = d3
         .nest()
@@ -1995,7 +1961,6 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         return (
           (regionKey = v.key),
           (regionKeyID = regionKey.replace(" ", "_")),
-          // regionText = `<a>${regionKey}<br></a>`;
           (regionText = `<div><input type="checkbox" id=${regionKeyID} checked>
             <label for=${regionKeyID}>${regionKey}</label></div>`),
           $("#regionData").append(regionText)
@@ -2039,7 +2004,6 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
             return "block";
           }
         });
-
       }
 
       //.....................
@@ -3082,11 +3046,11 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
                 .replace(/&/g, "and");
               d3.select(
                 "#" +
-                d.key.toLowerCase() +
-                "-" +
-                stageSegId +
-                "-stage" +
-                d.index
+                  d.key.toLowerCase() +
+                  "-" +
+                  stageSegId +
+                  "-stage" +
+                  d.index
               ).attr("opacity", 0);
             });
           });
@@ -3139,11 +3103,11 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
               d.name == "Unfunded" ? (d.name = "Private") : d.name;
               d3.select(
                 "#" +
-                d.name.toLowerCase().replace(/ /g, "-").replace(/&/g, "and") +
-                "-" +
-                stageSegId +
-                "-stage" +
-                v.index
+                  d.name.toLowerCase().replace(/ /g, "-").replace(/&/g, "and") +
+                  "-" +
+                  stageSegId +
+                  "-stage" +
+                  v.index
               ).attr("opacity", 0);
             });
           });
@@ -3229,11 +3193,11 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
                 .replace(/&/g, "and");
               d3.select(
                 "#" +
-                d.key.toLowerCase().replace(/ /g, "-").replace(/&/g, "and") +
-                "-" +
-                stageSegId +
-                "-stage" +
-                v.index
+                  d.key.toLowerCase().replace(/ /g, "-").replace(/&/g, "and") +
+                  "-" +
+                  stageSegId +
+                  "-stage" +
+                  v.index
               ).attr("opacity", 1);
             });
           });
@@ -3696,12 +3660,12 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
               .attr(
                 "d",
                 "m0 " +
-                -labelRadius +
-                " a" +
-                labelRadius +
-                " " +
-                labelRadius +
-                " 0 1,1 -0.01 0"
+                  -labelRadius +
+                  " a" +
+                  labelRadius +
+                  " " +
+                  labelRadius +
+                  " 0 1,1 -0.01 0"
               );
             tmpLabelsOther
               .append("def")
@@ -3710,12 +3674,12 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
               .attr(
                 "d",
                 "m0 " +
-                -labelOtherRadius +
-                " a" +
-                labelOtherRadius +
-                " " +
-                labelOtherRadius +
-                " 0 1,1 -0.01 0"
+                  -labelOtherRadius +
+                  " a" +
+                  labelOtherRadius +
+                  " " +
+                  labelOtherRadius +
+                  " 0 1,1 -0.01 0"
               );
 
             tmpLabels
@@ -4183,10 +4147,10 @@ function assignNonRandomYear(
       index++;
       try {
         const tmp = indexTrackerYear[data["Play"]][data["Founded"]]["slot"];
-      } catch (e) { }
+      } catch (e) {}
       const indexTrackerYearIndex =
         indexTrackerYear[data["Play"]] !== undefined &&
-          indexTrackerYear[data["Play"]][data["Founded"]] !== undefined
+        indexTrackerYear[data["Play"]][data["Founded"]] !== undefined
           ? indexTrackerYear[data["Play"]][data["Founded"]]["slot"]
           : 0;
       if (index === indexTrackerYearIndex) {
@@ -4395,11 +4359,11 @@ function assignRandom(
       Math.random() * (tmp_endAngleMax - tmp_startAngle) + tmp_startAngle;
     tmp_innerRadius =
       scaleToLocatePoint(total_funding) *
-      (tmp_outerRadiusMax - tmp_innerRadiusMin) +
+        (tmp_outerRadiusMax - tmp_innerRadiusMin) +
       tmp_innerRadiusMin;
     tmp_outerRadius =
       scaleToLocatePoint(total_funding) *
-      (tmp_outerRadiusMax - tmp_innerRadius) +
+        (tmp_outerRadiusMax - tmp_innerRadius) +
       tmp_innerRadius;
   } else {
     tmp_startAngle =
@@ -4427,7 +4391,7 @@ function assignRandom(
     for (l = 0; l < nodeList.length; l++) {
       distance = Math.sqrt(
         Math.pow(nodeList[l][0] - tmp_x, 2) +
-        Math.pow(nodeList[l][1] - tmp_y, 2)
+          Math.pow(nodeList[l][1] - tmp_y, 2)
       );
       if (distance <= 5) {
         distanceCheck = 1;
