@@ -1,0 +1,346 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <title>Dashboard</title>
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+      <script src="https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js"></script>
+      <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+      <!-- <script src="jquery.js"></script> -->
+      <!-- <script src="jquery-3.6.0.min.js"></script> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <link
+        href="https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+      />
+      <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+      <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+      <script
+        src="https://kit.fontawesome.com/ea2379d57d.js"
+        crossorigin="anonymous"
+      ></script>
+      <link rel="icon" href="assets/favicon.ico">
+      <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body>
+      <!-- description div -->
+      <div id="compass-description-container">
+        <p class="key-label">
+          Hello! Welcome to our startup compass. This is developed with information from 340+ startups to visualise and show key venture activities of ‘Co-working at INGKA’ and ‘Workspace sourcing – Offices’ plays. 
+        </p>
+
+        <p class="key-label">
+          You can move your mouse to hover on all startups to see more information, and you can click on them to go to their websites. There are 2 toggles to visualise some insights. The top toggle rearranges the startups by founded year, funding stage, or maturity; the bottom toggle is used to either show all startups with the same opacity or highlight the 'Hero' startups by making non-'Hero' startups slightly transparent.
+
+        </p>
+        <p class="key-label">
+          Hope you find this compass useful!
+        </p>
+      </div>
+        <div id="key-container"></div>
+      <div class="node-tooltip">
+        <div class="node-tooltip-title"></div>
+        <div class="node-tooltip-Year-founded"></div>
+        <div class="node-tooltip-Funding-stage"></div>
+        <div class="node-tooltip-funding"></div>
+        <div class="node-tooltip-Country"></div>
+        <div class="node-tooltip-Website"></div>
+        <div class="node-tooltip-description"></div>
+      </div>
+      <div class="popup-bg">
+        <div class="popup-container added">
+          <div class="popup-tag">
+            <div id="theme-tag" class="popup-tag-item">Theme</div>
+            <div class="popup-tag-item-arr"> > </div>
+            <div id="Play-tag" class="popup-tag-item">Mega theme</div>
+          </div>
+          <div class="popup-close">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="popup-section-a">
+            <div class="column left">
+              <div class="svg-container"></div>
+              <div class="Location-title">
+                Mega theme
+              </div>
+              <div class="Location-description">
+                New, greener cement formulations that reduce carbon through replacing traditional clinker
+              </div>
+              <div class="Location-summary">
+                <div class="Location-summary-row">
+                  <div class="opp-space-summary-column column-icon">
+                    <i class="fas fa-columns"></i>
+                  </div>
+                  <div class="opp-space-summary-column column-desc">Total No. Of Startups: </div>
+                  <div id="total-no-startups" class="opp-space-summary-column column-value"></div>
+                </div>
+                <div class="Location-summary-row">
+                  <div class="opp-space-summary-column column-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                  </div>
+                  <div class="opp-space-summary-column column-desc">Total + Average Funding Amount: </div>
+                  <div id="total-avg-funding" class="opp-space-summary-column column-value"></div>
+                </div>
+                <div class="Location-summary-row">
+                  <div class="opp-space-summary-column column-icon">
+                    <i class="far fa-calendar-alt"></i>
+                  </div>
+                  <div class="opp-space-summary-column column-desc">Avg Founded Year + Maturity: </div>
+                  <div id="avg-funding-year" class="opp-space-summary-column column-value"></div>
+                </div>
+              </div>
+            </div>
+            <div class="column right">
+              <div class="right-title">Hero Startups</div>
+            <table>
+              <tr id="hs-0" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-0"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-0" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-0" class="hero-startup-desc">
+                  <div id="hs-ov-0" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-0" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-0" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-0"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-0"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-0" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-0" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-0" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+
+              <tr id="hs-1" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-1"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-1" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-1" class="hero-startup-desc">
+                  <div id="hs-ov-1" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-1" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-1" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-1"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-1"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-1" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-1" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-1" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+
+              <tr id="hs-2" class="hero-startup-container">
+                <td
+                  id="hs-logo-container-2"
+                  class="hero-startup-logo-container"
+                >
+                  <img id="hs-logo-2" class="hero-startup-logo" src="" />
+                </td>
+                <td id="hs-desc-2" class="hero-startup-desc">
+                  <div id="hs-ov-2" class="hero-startup-desc-overview"></div>
+                  <div id="hs-prb-2" class="hero-startup-desc-problem"></div>
+                  <div id="hs-sln-2" class="hero-startup-desc-solution"></div>
+                </td>
+                <td class="hero-startup-stats">
+                  <div
+                    id="hs-website-2"
+                    class="hero-startup-stats-website"
+                  ></div>
+                  <div
+                    id="hs-location-2"
+                    class="hero-startup-stats-location"
+                  ></div>
+                  <div id="hs-round-2" class="hero-startup-stats-round"></div>
+                  <div id="hs-amount-2" class="hero-startup-stats-amount"></div>
+                  <div id="hs-year-2" class="hero-startup-stats-year"></div>
+                </td>
+              </tr>
+            </table>
+            </div>
+          </div>
+          <div class="popup-section-b">
+              <div class="bar-chart-title">Bar Chart</div>
+              <div class="dropdown-bar-chart">
+                  <button class="dropbtn-b">
+                    <i class="arrow down"> </i> Select Data
+                  </button>
+                  <div class="dropdown-bar-content" id="bar-chart-selector"></div>
+                </div>
+                <div class="svg-bar-container"></div>
+          </div>
+          <div class='analysis-btn'>
+            <i class="fas fa-chevron-circle-down"></i>
+            <div class="popup-analysis-label">Analysis</div>
+          </div>
+
+        </div>
+        </div>
+      <div class="left-sidebar">
+        <div class="left-sidebar-header">
+          <img src="assets/logoIngka.png">
+        </div>
+
+        <div class="left-sidebar-buttons">
+          <div id="radar-toggle-btn" class="left-sidebar-btn">
+          <div class="left-sidebar-btn-label">Compass</div>
+          <i class="fas fa-bullseye fa-lg"></i>  
+        </div>
+          <div id="analysis-toggle-btn" class="left-sidebar-btn">
+            <!-- <div class="left-sidebar-btn-label">Analysis</div>
+            <i class="fas fa-chart-line fa-lg"></i> -->
+          </div>
+          <div id="air-table-toggle-btn" class="left-sidebar-btn">
+            <!-- <div class="left-sidebar-btn-label">Database</div>
+            <i class="fas fa-table fa-lg"></i> -->
+          </div>      
+        <div id="map-toggle-btn" class="left-sidebar-btn">
+          <!-- <div class="left-sidebar-btn-label">Map</div>
+          <i class="far fa-map fa-lg"></i> -->
+        </div>
+        </div>
+      </div>
+
+      <div id="hover-info-container"></div>
+      <div id="opp-space-tooltip-container">
+          <div class="opp-space-tooltip">
+          <div class="opp-space-tooltip-title"></div>
+          <div id="ostt-1" class="opp-space-tooltip-item"></div>
+          <div id="ostt-2" class="opp-space-tooltip-sub-heading">Total Funding:</div>
+          <div id="ostt-3" class="opp-space-tooltip-item"></div>
+          <div id="ostt-4" class="opp-space-tooltip-sub-heading">Total Number of Startups:</div>
+          <div id="ostt-5" class="opp-space-tooltip-item"></div>
+          <div id="ostt-6" class="opp-space-tooltip-sub-heading">Average Funding:</div>
+          <div id="ostt-7" class="opp-space-tooltip-item"></div>
+          <div id="ostt-8" class="opp-space-tooltip-item bold"></div>
+          <div id="ostt-9" class="opp-space-tooltip-item"></div>
+        </div>
+      </div>
+      <!-- <div class="analysis-container">
+        <iframe src="https://datastudio.google.com/embed/reporting/d12f6898-928e-40ce-93f5-d224cee6ec78/page/Bk5TB" frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+      <div class="air-table-container">
+      <iframe class="airtable-embed" src="https://airtable.com/embed/shrKeZi5p88FUkbLw/tbluEq1EhInfnfLrf?backgroundColor=orange&viewControls=on" frameborder="0" onmousewheel="" tyle="background: transparent; border: 1px solid #ccc;" allowfullscreen></iframe>
+      </div> -->
+        <div class="map-container">
+          <div class="sidebar">
+            <div class="sidebar-title"></div>
+            <div id="startup-list"></div>
+          </div>
+          <div class="map-tooltip"></div>
+          <div class="bg"></div>
+          <div id="map"></div>
+      </div>
+
+      <div id="chart-container"></div>
+      <div id="control-container">
+        <div>
+          <div>
+            <div class="tri-state-toggle">
+
+              <button class="tri-state-toggle-button" id="toggle-button1">
+                Year
+              </button>
+      
+              <button class="tri-state-toggle-button" id="toggle-button2">
+                Maturity
+              </button>
+      
+              <!-- <button class="tri-state-toggle-button" id="toggle-button3">
+                Stage
+              </button> -->
+      
+            </div>
+
+            <div class="two-state-toggle">
+
+              <button class="two-state-toggle-btn" id="toggle-btn1">
+                All
+              </button>
+      
+              <button class="two-state-toggle-btn" id="toggle-btn2">
+                Hero
+              </button>
+      
+            </div>
+
+
+            
+            <!-- <div class="button b2" id="button-16" style="display: none;">
+              <input type="checkbox" class="checkbox"   />
+              <div class="knobs"></div>
+              <div class="layer"></div>
+            </div> -->
+
+
+            <!-- <div class="button b2" id="button-all-hero">
+              <input type="checkbox" class="checkbox"  />
+              <div class="knobs"></div>
+              <div class="layer"></div>
+            </div> -->
+
+            <!-- <div class="dropdown">
+              <div class="dropbtn">
+                <button>Region</button>
+                <i class="fa fa-chevron-circle-down"></i>
+              </div>
+              <div class="dropdown-content">
+                <div id="region" class="regionValues"></div>
+              </div>
+            </div> -->
+
+
+            <div class="dropdown">
+              <div class="dropbtn">
+                <button>Region</button>
+                <i class="fa fa-chevron-circle-down icon1"></i>
+                <i class="fa fa-chevron-circle-up icon2" aria-hidden="true"></i>
+              </div>
+              <div class="dropdown-content">
+                <div id="regionData" class="regionValues">
+                  
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="button b2" id="button-global-europe" style="display: none;">
+              <input type="checkbox" class="checkbox"  />
+              <div class="knobs"></div>
+              <div class="layer"></div>
+            </div> -->
+          <div>
+          <div id="save-button-container">
+            <button class="switch-button" id="save-button">Save Image</button>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div id="tmp-container"></div>
+
+      <script src="index.js"></script>
+    </body>
+  </html>
