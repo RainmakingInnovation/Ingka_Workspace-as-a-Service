@@ -159,7 +159,7 @@ var hoverSVG = d3
 var chartTitle = chartSVG
   .append("text")
   .attr("class", "chart-title")
-  .text("INGKA Life at Work Validation Compass")
+  .text("Ingka - Workspace as a service Compass")
   .attr("y", (-height * 4.55) / 10);
 
 d3.select(".map-container").style("display", "none");
@@ -212,10 +212,10 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
   });
 
   //   data.forEach((row) => {
-  //     if (row["Location"].includes("(")) {
-  //       row["Location"] = row["Location"].split(") ")[1];
+  //     if (row["Region"].includes("(")) {
+  //       row["Region"] = row["Region"].split(") ")[1];
   //     } else {
-  //       row["Location"] = row["Location"];
+  //       row["Region"] = row["Region"];
   //     }
   //     if (row["Inc. Compass"] == "TRUE") {
   //       filteredDataWhenIncCompass.push(row);
@@ -1150,11 +1150,11 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
               }
             } else {
               if (i === 0) {
-                return "1.9em";
+                return "1.7em";
               } else if (i === 1) {
-                return "3em";
+                return "3.2em";
               } else {
-                return "4em";
+                return "4.6em";
               }
             }
           }
@@ -1624,7 +1624,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       var nodeData = d3
         .nest()
         .key(function (d) {
-          return d["Location"] + "-" + d["Play"];
+          return d["Region"] + "-" + d["Play"];
         })
         .key(function (d) {
           return d["Maturity"];
@@ -1638,7 +1638,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       var nodeThirdData = d3
         .nest()
         .key(function (d) {
-          return d["Location"] + "-" + d["Play"];
+          return d["Region"] + "-" + d["Play"];
         })
         .key(function (d) {
           return d["Funding Stage"];
@@ -1652,7 +1652,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       var nodeSecondData = d3
         .nest()
         .key(function (d, i) {
-          return d["Location"] + "-" + d["Play"];
+          return d["Region"] + "-" + d["Play"];
         })
         .key(function (d) {
           return d["Founded"];
@@ -1698,7 +1698,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
           }
         }
         for (i = 0; i < nodeThirdData.length; i++) {
-          if (nodeThirdData[i].key === d["Location"] + "-" + d["Play"]) {
+          if (nodeThirdData[i].key === d["Region"] + "-" + d["Play"]) {
             for (j = 0; j < nodeThirdData[i].values.length; j++) {
               if (nodeThirdData[i].values[j].key === fundingStage) {
                 var congestion = calcCongestion(
@@ -1729,7 +1729,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
                     nodeThirdData[i].values[j],
                     "Funding Stage"
                   );
-                  indexTracker[d["Location"]][d["Funding Stage"]]["slot"] += 1;
+                  indexTracker[d["Region"]][d["Funding Stage"]]["slot"] += 1;
                 }
               }
             }
@@ -1766,7 +1766,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
           }
         }
         for (i = 0; i < nodeData.length; i++) {
-          if (nodeData[i].key === d["Location"] + "-" + d["Play"]) {
+          if (nodeData[i].key === d["Region"] + "-" + d["Play"]) {
             for (j = 0; j < nodeData[i].values.length; j++) {
               if (nodeData[i].values[j].key === d["Maturity"]) {
                 var congestion = calcCongestion(
@@ -1797,7 +1797,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
                     nodeData[i].values[j],
                     "Maturity"
                   );
-                  indexTracker[d["Location"]][d["Maturity"]]["slot"] += 1;
+                  indexTracker[d["Region"]][d["Maturity"]]["slot"] += 1;
                 }
               }
             }
@@ -1837,7 +1837,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         }
         var congestion;
         for (i = 0; i < nodeSecondData.length; i++) {
-          if (nodeSecondData[i].key === d["Location"] + "-" + d["Play"]) {
+          if (nodeSecondData[i].key === d["Region"] + "-" + d["Play"]) {
             for (j = 0; j < nodeSecondData[i].values.length; j++) {
               if (nodeSecondData[i].values[j].key === d["Founded"]) {
                 congestion = calcCongestion(
@@ -1867,19 +1867,19 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
                     nodeSecondData[i].values[j]
                   );
                 }
-                if (indexTrackerYear[d["Location"]] === undefined) {
-                  indexTrackerYear[d["Location"]] = {};
-                  indexTrackerYear[d["Location"]][d["Founded"]] = {
+                if (indexTrackerYear[d["Region"]] === undefined) {
+                  indexTrackerYear[d["Region"]] = {};
+                  indexTrackerYear[d["Region"]][d["Founded"]] = {
                     slot: 1,
                   };
                 } else if (
-                  indexTrackerYear[d["Location"]][d["Founded"]] === undefined
+                  indexTrackerYear[d["Region"]][d["Founded"]] === undefined
                 ) {
-                  indexTrackerYear[d["Location"]][d["Founded"]] = {
+                  indexTrackerYear[d["Region"]][d["Founded"]] = {
                     slot: 1,
                   };
                 } else {
-                  indexTrackerYear[d["Location"]][d["Founded"]]["slot"] += 1;
+                  indexTrackerYear[d["Region"]][d["Founded"]]["slot"] += 1;
                 }
               }
             }
@@ -1947,7 +1947,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       var count_by_region = d3
         .nest()
         .key(function (d) {
-          return d["Location"];
+          return d["Region"];
         })
         .sortKeys(d3.ascending)
         .entries(data);
@@ -1990,7 +1990,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
 
       function updateNodesbyRegion() {
         nodes.style("display", function (d) {
-          if (filterRegions.indexOf(d["Location"]) >= 0) {
+          if (filterRegions.indexOf(d["Region"]) >= 0) {
             return "none";
           } else {
             return "block";
@@ -1998,7 +1998,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         });
 
         nodes_acquired.style("display", function (d) {
-          if (filterRegions.indexOf(d["Location"]) >= 0) {
+          if (filterRegions.indexOf(d["Region"]) >= 0) {
             return "none";
           } else {
             return "block";
@@ -2026,14 +2026,14 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
         }
         if (type == "region") {
           nodes.attr("opacity", function (d) {
-            if (d["Location"] === data) {
+            if (d["Region"] === data) {
               return 1;
             } else {
               return 0.3;
             }
           });
           nodes_acquired.attr("opacity", function (d) {
-            if (d["Location"] === data) {
+            if (d["Region"] === data) {
               return 1;
             } else {
               return 0.3;
@@ -2961,7 +2961,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
       function update_visibility() {
         nodes.style("visibility", function (d) {
           var visibility = "visible";
-          if (eu == false && d["Location"] == "Global") {
+          if (eu == false && d["Region"] == "Global") {
             visibility = "hidden";
           }
           return visibility;
@@ -2969,7 +2969,7 @@ d3.csv("INGKA_RM_L@W_Startup4.csv").then(function (data) {
 
         // nodes_acquired.style("visibility", function(d) {
         //   var visibility = "visible"
-        //   if (eu == false && d["Location"] == "Global") {
+        //   if (eu == false && d["Region"] == "Global") {
         //     visibility = "hidden"
         //   }
         //   return visibility
